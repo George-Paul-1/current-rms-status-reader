@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let total = document.querySelector(".total");
     let percentage = document.querySelector(".percentage");
     let progressBar = document.querySelector('.progress');
+    let progressBarCheckedIn = document.querySelector('.progressCheckedIn')
 
     const calcPercentage = function (total, portion) {
         console.log(total, portion);
@@ -25,7 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 prep.classList.add('tag');
                 prep.classList.add('is-primary');
                 prep.innerHTML = `Amount prepped: ${response.prepped}`;
-            }
+                const percentageNum = calcPercentage(totalItems, response.prepped)
+                percentage.innerHTML = ` Percentage Prepped ${percentageNum}%`;
+                progressBar.max = totalItems;
+                progressBar.value = response.prepped; 
+                progressBar.style.visibility = "visible";
+                }
             if (response.reserved) {
                 res.classList.add('tag');
                 res.classList.add('is-info');
@@ -40,6 +46,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 checkedIn.classList.add('tag');
                 checkedIn.classList.add('is-success');
                 checkedIn.innerHTML = `Amount Checked In: ${response.checkedIn}`;
+                const percentageCheckedIn = calcPercentage(totalItems, response.checkedIn);
+                percentage.innerHTML = ` Percentage Checked In ${percentageCheckedIn}%`;
+                progressBarCheckedIn.max = totalItems;
+                progressBarCheckedIn.value = response.checkedIn;
+                progressBarCheckedIn.style.visibility = "visible";
             }
             if (response.partCheckedIn) {
                 partCheckedIn.classList.add('tag');
@@ -47,10 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 partCheckedIn.innerHTML = `Amount Part Checked In: ${response.partCheckedIn}`;
             }
             total.innerHTML = `Total Items: ${totalItems}`;
-            const percentageNum = calcPercentage(totalItems, response.prepped)
-            percentage.innerHTML = ` Percentage Prepped ${percentageNum}%`;
-            progressBar.max = totalItems;
-            progressBar.value = response.prepped; 
         })
     })
 })
