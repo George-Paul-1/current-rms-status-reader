@@ -10,13 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let total = document.querySelector(".total");
     let percentage = document.querySelector(".percentage");
     let progressBar = document.querySelector('.progress');
-    let progressBarCheckedIn = document.querySelector('.progressCheckedIn')
 
     const calcPercentage = function (total, portion) {
         console.log(total, portion);
         return Math.round((portion / total) * 100);
     }
-
 
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         chrome.tabs.sendMessage(tabs[0].id, {action: "getStats"}, function(response) {
@@ -48,9 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 checkedIn.innerHTML = `Amount Checked In: ${response.checkedIn}`;
                 const percentageCheckedIn = calcPercentage(totalItems, response.checkedIn);
                 percentage.innerHTML = ` Percentage Checked In ${percentageCheckedIn}%`;
-                progressBarCheckedIn.max = totalItems;
-                progressBarCheckedIn.value = response.checkedIn;
-                progressBarCheckedIn.style.visibility = "visible";
+                
             }
             if (response.partCheckedIn) {
                 partCheckedIn.classList.add('tag');
