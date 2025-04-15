@@ -18,40 +18,79 @@ document.addEventListener('DOMContentLoaded', () => {
 
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         chrome.tabs.sendMessage(tabs[0].id, {action: "getStats"}, function(response) {
-            console.log(response);
+
             const totalItems = response.prepped + response.reserved + response.bookedOut + response.checkedIn + response.partCheckedIn;
+            progressBar.max = totalItems;
+
             if (response.prepped) {
                 prep.classList.add('tag');
                 prep.classList.add('is-primary');
-                prep.innerHTML = `Amount prepped: ${response.prepped}`;
-                const percentageNum = calcPercentage(totalItems, response.prepped)
-                percentage.innerHTML = ` Percentage Prepped ${percentageNum}%`;
-                progressBar.max = totalItems;
-                progressBar.value = response.prepped; 
-                progressBar.style.visibility = "visible";
-                }
+                prep.innerHTML = `Prepped: ${response.prepped}`;
+                const percentagePrep = calcPercentage(totalItems, response.prepped)
+                prep.addEventListener("mouseover", () => {
+                    progressBar.removeAttribute("class");
+                    progressBar.classList.add("progress", "is-success");
+                    progressBar.style.visibility = "visible";
+                    percentage.innerHTML = ` Percentage Prepped ${percentagePrep}%`;
+                    progressBar.value = response.prepped;
+                });
+            }
+
             if (response.reserved) {
                 res.classList.add('tag');
                 res.classList.add('is-info');
-                res.innerHTML = `Amount Reserved: ${response.reserved}`;
+                res.innerHTML = `Reserved: ${response.reserved}`;
+                const percentageRes = calcPercentage(totalItems, response.reserved);
+                res.addEventListener("mouseover", () => {
+                    progressBar.removeAttribute("class");
+                    progressBar.classList.add("progress", "is-link");
+                    progressBar.style.visibility = "visible";
+                    percentage.innerHTML = ` Percentage Reserved ${percentageRes}%`;
+                    progressBar.value = response.reserved;
+                });
             }
+
             if (response.bookedOut) {
                 book.classList.add('tag');
                 book.classList.add('is-danger');
-                book.innerHTML = `Amount Booked Out: ${response.bookedOut}`;
+                book.innerHTML = `Booked Out: ${response.bookedOut}`;
+                const percentageBooked = calcPercentage(totalItems, response.bookedOut);
+                book.addEventListener("mouseover", () => {
+                    progressBar.removeAttribute("class");
+                    progressBar.classList.add("progress", "is-danger");
+                    progressBar.style.visibility = "visible";
+                    percentage.innerHTML = ` Percentage Booked ${percentageBooked}%`;
+                    progressBar.value = response.bookedOut;
+                });
             }
+
             if (response.checkedIn) {
                 checkedIn.classList.add('tag');
-                checkedIn.classList.add('is-success');
-                checkedIn.innerHTML = `Amount Checked In: ${response.checkedIn}`;
+                checkedIn.classList.add('is-info');
+                checkedIn.innerHTML = `Checked In: ${response.checkedIn}`;
                 const percentageCheckedIn = calcPercentage(totalItems, response.checkedIn);
                 percentage.innerHTML = ` Percentage Checked In ${percentageCheckedIn}%`;
-                
+                checkedIn.addEventListener("mouseover", () => {
+                    progressBar.removeAttribute("class");
+                    progressBar.classList.add("progress", "is-info");
+                    progressBar.style.visibility = "visible";
+                    percentage.innerHTML = ` Percentage Check In ${percentageCheckedIn}%`;
+                    progressBar.value = response.checkedIn;
+                });
             }
+
             if (response.partCheckedIn) {
                 partCheckedIn.classList.add('tag');
                 partCheckedIn.classList.add('is-link');
-                partCheckedIn.innerHTML = `Amount Part Checked In: ${response.partCheckedIn}`;
+                partCheckedIn.innerHTML = `Part Checked In: ${response.partCheckedIn}`;
+                const percentPartChecked = calcPercentage(totalItems, response.partCheckedIn);
+                partCheckedIn.addEventListener("mouseover", () => {
+                    progressBar.removeAttribute("class");
+                    progressBar.classList.add("progress", "is-link");
+                    progressBar.style.visibility = "visible";
+                    percentage.innerHTML = ` Percentage Part Checked In ${percentPartChecked}%`;
+                    progressBar.value = response.partCheckedIn;
+                });
             }
             total.innerHTML = `Total Items: ${totalItems}`;
         })
