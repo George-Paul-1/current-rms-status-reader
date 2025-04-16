@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let progressBar = document.querySelector('.progress');
 
     const calcPercentage = function (total, portion) {
-        console.log(total, portion);
         return Math.round((portion / total) * 100);
     }
 
@@ -43,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const percentageRes = calcPercentage(totalItems, response.reserved);
                 res.addEventListener("mouseover", () => {
                     progressBar.removeAttribute("class");
-                    progressBar.classList.add("progress", "is-link");
+                    progressBar.classList.add("progress", "is-info");
                     progressBar.style.visibility = "visible";
                     percentage.innerHTML = ` Percentage Reserved ${percentageRes}%`;
                     progressBar.value = response.reserved;
