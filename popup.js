@@ -68,7 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 checkedIn.classList.add('is-info');
                 checkedIn.innerHTML = `Checked In: ${response.checkedIn}`;
                 const percentageCheckedIn = calcPercentage(totalItems, response.checkedIn);
-                percentage.innerHTML = ` Percentage Checked In ${percentageCheckedIn}%`;
                 checkedIn.addEventListener("mouseover", () => {
                     progressBar.removeAttribute("class");
                     progressBar.classList.add("progress", "is-info");
