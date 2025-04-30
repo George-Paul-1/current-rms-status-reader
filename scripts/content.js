@@ -5,6 +5,7 @@ const reserved = 'info';
 const bookedOut = 'danger';
 const checkedIn = 'primary';
 const partCheckedIn = 'reserved';
+const allocated = 'warning';
 
 // content.js
 const getCount = function(option) {
@@ -18,6 +19,7 @@ const countRes = getCount(reserved);
 const countBook = getCount(bookedOut);
 const countCheck = getCount(checkedIn);
 const partChecked = getCount(partCheckedIn);
+const countAllocated = getCount(allocated);
 
 chrome.runtime.onMessage.addListener(function(request, _, sendResponse) {
     if (request.action === 'getStats') {
@@ -26,7 +28,8 @@ chrome.runtime.onMessage.addListener(function(request, _, sendResponse) {
             reserved: countRes,
             bookedOut: countBook, 
             checkedIn: countCheck,
-            partCheckedIn: partChecked
+            partCheckedIn: partChecked,
+            allocated: countAllocated
         });
     }
     return true; 

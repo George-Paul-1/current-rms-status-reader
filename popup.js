@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let book = document.querySelector(".bookedOut");
     let checkedIn = document.querySelector(".checkedIn");
     let partCheckedIn = document.querySelector(".partCheckedIn");
+    let allocated = document.querySelector(".allocated");
     let total = document.querySelector(".total");
     let percentage = document.querySelector(".percentage");
     let progressBar = document.querySelector('.progress');
@@ -18,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         chrome.tabs.sendMessage(tabs[0].id, {action: "getStats"}, function(response) {
 
-            const totalItems = response.prepped + response.reserved + response.bookedOut + response.checkedIn + response.partCheckedIn;
+            const totalItems = response.prepped + response.reserved + response.bookedOut + response.checkedIn + response.partCheckedIn + response.allocated;
             progressBar.max = totalItems;
 
             if (response.prepped) {
@@ -88,6 +89,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     progressBar.style.visibility = "visible";
                     percentage.innerHTML = ` Percentage Part Checked In ${percentPartChecked}%`;
                     progressBar.value = response.partCheckedIn;
+                });
+            }
+            if (response.allocated) {
+                allocated.classList.add('tag');
+                allocated.classList.add('is-warning');
+                allocated.innerHTML = `Allocated: ${response.allocated}`;
+                const percentAllocated = calcPercentage(totalItems, response.allocated);
+                allocated.addEventListener("mouseover", () => {
+                    progressBar.removeAttribute("class");
+                    progressBar.classList.add("progress", "is-warning");
+                    progressBar.style.visibility = "visible";
+                    percentage.innerHTML = ` Percentage Allocated ${percentAllocated}%`;
+                    progressBar.value = response.allocated;
                 });
             }
             total.innerHTML = `Total Items: ${totalItems}`;
