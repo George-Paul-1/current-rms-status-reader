@@ -29,7 +29,8 @@ chrome.runtime.onMessage.addListener(function(request, _, sendResponse) {
             bookedOut: countBook, 
             checkedIn: countCheck,
             partCheckedIn: partChecked,
-            allocated: countAllocated
+            allocated: countAllocated,
+            url: window.location.href
         });
     }
     return true; 

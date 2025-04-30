@@ -11,13 +11,19 @@ document.addEventListener('DOMContentLoaded', () => {
     let total = document.querySelector(".total");
     let percentage = document.querySelector(".percentage");
     let progressBar = document.querySelector('.progress');
+    let error = document.querySelector('.error');
 
     const calcPercentage = function (total, portion) {
         return Math.round((portion / total) * 100);
     }
 
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        console.log(tabs);
         chrome.tabs.sendMessage(tabs[0].id, {action: "getStats"}, function(response) {
+            console.log(`RESPONSE : ${response}`);
+
+            if (!response.url.includes("/opportunities/")) error.innerHTML = "No Items Visible";
+            else error.innerHTML = "";
 
             const totalItems = response.prepped + response.reserved + response.bookedOut + response.checkedIn + response.partCheckedIn + response.allocated;
             progressBar.max = totalItems;
@@ -104,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     progressBar.value = response.allocated;
                 });
             }
+
             total.innerHTML = `Total Items: ${totalItems}`;
         })
     })

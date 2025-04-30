@@ -13,7 +13,7 @@
                 "scripts/content.js"
             ],
             "matches": [
-                "https://hirefrequencies.current-rms.com/opportunities/*"
+                "https://hirefrequencies.current-rms.com/*"
             ]
         }
     ],

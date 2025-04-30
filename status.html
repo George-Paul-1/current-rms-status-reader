@@ -1,37 +1,40 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Current Status Update Summary</title>
+    <link rel="stylesheet" href="./bulma/css/bulma.min.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Current Status Update Summary</title>
-  <link rel="stylesheet" href="./bulma/css/bulma.min.css" />
-</head>
+  <body>
+    <div class="container m-3">
+      <h1 class="title">Current Status</h1>
 
-<body>
-  <div class="container m-3">
-    <h1 class="title">Current Status</h1>
+      <div class="field">
+        <h3 class="total label"></h3>
+      </div>
 
-    <div class="field">
-      <h3 class="total label"></h3>
+      <div class="field">
+        <h3 class="error"></h3>
+        <h3 class="prepped"></h3>
+        <h3 class="reserved"></h3>
+        <h3 class="bookedOut"></h3>
+        <h3 class="checkedIn"></h3>
+        <h3 class="partCheckedIn"></h3>
+        <h3 class="allocated"></h3>
+      </div>
+      <div class="field">
+        <h3 class="percentage"></h3>
+        <progress
+          style="visibility: hidden; width: 90%; max-width: 300px"
+          class="progress is-success"
+          value=""
+          max=""
+        ></progress>
+      </div>
     </div>
-
-    <div class="field">
-      <h3 class="prepped"></h3>
-      <h3 class="reserved"></h3>
-      <h3 class="bookedOut"></h3>
-      <h3 class="checkedIn"></h3>
-      <h3 class="partCheckedIn"></h3>
-      <h3 class="allocated"></h3>
-    </div>
-    <div class="field">
-      <h3 class="percentage"></h3>
-      <progress style="visibility: hidden; width: 90%; max-width: 300px" class="progress is-success" value=""
-        max=""></progress>
-    </div>
-  </div>
-  <script src="popup.js"></script>
-</body>
-
+    <script src="popup.js"></script>
+  </body>
 </html>
