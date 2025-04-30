@@ -1,6 +1,7 @@
 // popup.js 
 
 'use strict'; 
+
 document.addEventListener('DOMContentLoaded', () => {
     let prep = document.querySelector(".prepped");
     let res = document.querySelector(".reserved");

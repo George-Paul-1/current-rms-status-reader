@@ -1,3 +1,5 @@
+// content.js
+
 'use strict';
 
 const prepped = 'success';
